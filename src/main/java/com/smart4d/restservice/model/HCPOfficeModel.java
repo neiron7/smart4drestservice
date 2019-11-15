@@ -3,6 +3,7 @@ package com.smart4d.restservice.model;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,8 +15,9 @@ import java.util.List;
 public class HCPOfficeModel {
 
     @Id
-    @GeneratedValue(generator = "increment")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @NotBlank
     private String name;
     private String description;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)

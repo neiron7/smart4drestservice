@@ -5,6 +5,7 @@ package com.smart4d.restservice.model;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 /**
  * XDeviceModel entity
@@ -14,8 +15,9 @@ import javax.persistence.*;
 public class XDeviceModel {
 
     @Id
-    @GeneratedValue(generator = "increment")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @NotBlank
     private String name;
     private String description;
     @ManyToOne(cascade = CascadeType.ALL)
