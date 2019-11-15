@@ -1,45 +1,44 @@
-package com.smart4d.restservice.model;
+package com.smart4d.restservice.entities;
 
-
-
-import org.springframework.data.annotation.Id;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 /**
- * XDeviceModel entity
+ * XDevice entity
  */
 @Entity
-@Table(name = "XDeviceModel")
-public class XDeviceModel {
+@Table(name = "XDevice")
+public class XDevice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    @NotBlank
-    private String name;
-    private String description;
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Object hCPOffice;
+    @Column(name = "Id", nullable = false)
+    @ApiModelProperty(accessMode = ApiModelProperty.AccessMode.READ_ONLY)
+    private Long id;
 
-    public XDeviceModel() {
+    @Column(name = "Name", nullable = false)
+    private String name;
+
+    @Column(name = "Description", nullable = false)
+    private String description;
+
+    @ManyToOne(targetEntity = HCPOffice.class)
+    private HCPOffice hCPOffice;
+
+    public XDevice() {
 
     }
 
-    public XDeviceModel(long id,String name, String description, Object hCPOffice) {
+    public XDevice(long id, String name, String description, HCPOffice hCPOffice) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.hCPOffice = hCPOffice;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -62,7 +61,7 @@ public class XDeviceModel {
         return hCPOffice;
     }
 
-    public void setHCPOffice(String hCPOffice) {
+    public void setHCPOffice(HCPOffice hCPOffice) {
         this.hCPOffice = hCPOffice;
     }
 }
