@@ -1,5 +1,6 @@
 package com.smart4d.restservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,8 +28,15 @@ public class HCPOffice {
 
     private String description;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "hCPOffice")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "hCPOffice")
+    //@JsonIgnoreProperties(value="HCPOffice")
     private List<XDevice> xDevices = new ArrayList<>();
+
+    public HCPOffice(String name, String description, List<XDevice> xDevices) {
+        this.name = name;
+        this.description = description;
+        this.xDevices = xDevices;
+    }
 
     public HCPOffice(Long id, String name, String description, List<XDevice> xDevices) {
         this.id = id;
@@ -36,4 +44,6 @@ public class HCPOffice {
         this.description = description;
         this.xDevices = xDevices;
     }
+
+
 }

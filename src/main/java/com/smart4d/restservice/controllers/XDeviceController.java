@@ -1,6 +1,7 @@
 package com.smart4d.restservice.controllers;
 
 import com.smart4d.restservice.entities.XDevice;
+import com.smart4d.restservice.repositories.HCPOfficeRepository;
 import com.smart4d.restservice.repositories.XDeviceRepository;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
@@ -25,10 +26,12 @@ public class XDeviceController {
     private Logger logger = LoggerFactory.getLogger(XDeviceController.class);
 
     private XDeviceRepository xDeviceRepository;
+    private HCPOfficeRepository hCPOfficeRepository;
 
     @Autowired
-    public XDeviceController(XDeviceRepository xDeviceRepository){
+    public XDeviceController(XDeviceRepository xDeviceRepository, HCPOfficeRepository hCPOfficeRepository){
         this.xDeviceRepository = xDeviceRepository;
+        this.hCPOfficeRepository = hCPOfficeRepository;
     }
 
     @GetMapping("/")
@@ -66,7 +69,11 @@ public class XDeviceController {
             XDevice xDeviceToBeSaved = xDeviceInDB.get();
             xDeviceToBeSaved.setDescription(xDeviceToBeChanged.getDescription());
             xDeviceToBeSaved.setName(xDeviceToBeChanged.getName());
-            /*xDeviceToBeSaved.setHCPOffice(xDeviceToBeChanged.getHCPOffice());*/
+            if (Objects.nonNull(xDeviceToBeChanged.getHCPOffice()) && Objects.nonNull(xDeviceToBeChanged.getHCPOffice().getId())){
+                xDeviceToBeSaved.setHCPOffice(hCPOfficeRepository.getOne(xDeviceToBeChanged.getHCPOffice().getId()));
+            } else {
+                xDeviceToBeSaved.setHCPOffice(xDeviceToBeChanged.getHCPOffice());
+            }
             xDeviceRepository.save(xDeviceToBeSaved);
             return new ResponseEntity<>(xDeviceToBeSaved, HttpStatus.OK);
         } else {

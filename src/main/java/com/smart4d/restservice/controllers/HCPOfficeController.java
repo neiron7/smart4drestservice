@@ -3,6 +3,7 @@ package com.smart4d.restservice.controllers;
 import com.smart4d.restservice.entities.HCPOffice;
 import com.smart4d.restservice.entities.XDevice;
 import com.smart4d.restservice.repositories.HCPOfficeRepository;
+import com.smart4d.restservice.services.HCPOfficeService;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,71 +23,36 @@ import java.util.Optional;
 @RequestMapping("hCPOffice")
 @Validated
 public class HCPOfficeController {
-    private Logger logger = LoggerFactory.getLogger(XDeviceController.class);
-
-    private HCPOfficeRepository hCPOfficeRepository;
 
     @Autowired
-    public HCPOfficeController(HCPOfficeRepository hCPOfficeRepository){
-        this.hCPOfficeRepository = hCPOfficeRepository;
-    }
+    HCPOfficeService hCPOfficeService;
 
     @GetMapping("/")
     public ResponseEntity<List<HCPOffice>> getAllHCPOffices(){
-        logger.info("Getting list of HCPOffices.");
-        List<HCPOffice> listOfHCPOffices = hCPOfficeRepository.findAll();
-        if (Objects.isNull(listOfHCPOffices) || listOfHCPOffices.isEmpty()){
-            logger.info("No XDevices found!");
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            logger.warn("Here is a listOfHCPOffices of XDevices found:");
-            return new ResponseEntity<>(listOfHCPOffices, HttpStatus.OK);
-        }
+        return Objects.nonNull(hCPOfficeService.getAllHCPOffices()) ? new ResponseEntity<>(hCPOfficeService.getAllHCPOffices(), HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<HCPOffice> getHCPOfficeById(@Valid @PathVariable("id") Long id){
-        Optional<HCPOffice> hCPOfficeInDB = hCPOfficeRepository.findById(id);
-        return hCPOfficeInDB
-                .map(hCPOffice -> new ResponseEntity<>(hCPOffice, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return Objects.nonNull(hCPOfficeService.getHCPOfficeById(id)) ? new ResponseEntity<>(hCPOfficeService.getHCPOfficeById(id), HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/")
     public ResponseEntity<HCPOffice> registerHCPOffice(@Valid @RequestBody HCPOffice hCPOfficeToBeSaved){
-        logger.info("Registering new XDevice.");
-        HCPOffice savedHCPOffice = hCPOfficeRepository.save(hCPOfficeToBeSaved);
-        return new ResponseEntity<>(savedHCPOffice, HttpStatus.CREATED);
+        return new ResponseEntity<>(hCPOfficeService.registerHCPOffice(hCPOfficeToBeSaved), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<HCPOffice> updateHCPOffice(@Valid @PathVariable("id") Long id, @RequestBody HCPOffice hCPOfficeToBeChanged){
-        Optional<HCPOffice> hCPOfficeInDB = hCPOfficeRepository.findById(id);
-        if (hCPOfficeInDB.isPresent()){
-            HCPOffice hCPOfficeToBeSaved = hCPOfficeInDB.get();
-            hCPOfficeToBeSaved.setDescription(hCPOfficeToBeChanged.getDescription());
-            hCPOfficeToBeSaved.setName(hCPOfficeToBeChanged.getName());
-            hCPOfficeToBeSaved.setXDevices(hCPOfficeToBeChanged.getXDevices());
-            hCPOfficeRepository.save(hCPOfficeToBeSaved);
-            return new ResponseEntity<>(hCPOfficeToBeSaved, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return Objects.nonNull(hCPOfficeService.updateHCPOffice(id, hCPOfficeToBeChanged)) ? new ResponseEntity<>(hCPOfficeService.updateHCPOffice(id, hCPOfficeToBeChanged), HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity deleteHCPOffice(@Valid @PathVariable("id") Long id){
-        Optional<HCPOffice> hCPOfficeInDB = hCPOfficeRepository.findById(id);
-        return hCPOfficeInDB
-                .map(hCPOffice -> {
-                    hCPOfficeRepository.delete(hCPOfficeInDB.get());
-                    return new ResponseEntity<>(HttpStatus.OK);})
-                .orElseGet(()->new ResponseEntity<>(HttpStatus.NOT_FOUND));
-//        if (hCPOfficeInDB.isPresent()){
-//            hCPOfficeRepository.delete(hCPOfficeInDB.get());
-//            return new ResponseEntity<>(HttpStatus.OK);
-//        } else {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
+        if (hCPOfficeService.deleteHCPOffice(id)){
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

@@ -1,5 +1,8 @@
 package com.smart4d.restservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,13 +28,25 @@ public class XDevice {
 
     private String description;
 
-    /*@ManyToOne
-    private HCPOffice hCPOffice;*/
+    @ManyToOne
+    @JoinColumn(name = "hcpoffice_id")
+    @JsonProperty(value = "hcpoffice", access = JsonProperty.Access.WRITE_ONLY)
+    private HCPOffice hCPOffice;
 
-    public XDevice(long id, String name, String description/*, HCPOffice hCPOffice*/) {
+
+    public XDevice(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
+    public XDevice(long id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
-        /*this.hCPOffice = hCPOffice;*/
+    }
+
+    @JsonIgnore
+    public HCPOffice getHCPOffice() {
+        return hCPOffice;
     }
 }
