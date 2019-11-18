@@ -27,7 +27,7 @@ public class HCPOffice {
 
     private String description;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "HCPOffice_id")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "hCPOffice")
     private List<XDevice> xDevices = new ArrayList<>();
 
     public HCPOffice(Long id, String name, String description, List<XDevice> xDevices) {

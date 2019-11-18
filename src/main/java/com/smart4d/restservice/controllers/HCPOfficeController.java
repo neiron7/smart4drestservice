@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @RestController
 @Api
-@RequestMapping("xDevice")
+@RequestMapping("hCPOffice")
 @Validated
 public class HCPOfficeController {
     private Logger logger = LoggerFactory.getLogger(XDeviceController.class);

@@ -66,7 +66,7 @@ public class XDeviceController {
             XDevice xDeviceToBeSaved = xDeviceInDB.get();
             xDeviceToBeSaved.setDescription(xDeviceToBeChanged.getDescription());
             xDeviceToBeSaved.setName(xDeviceToBeChanged.getName());
-            xDeviceToBeSaved.setHCPOffice(xDeviceToBeChanged.getHCPOffice());
+            /*xDeviceToBeSaved.setHCPOffice(xDeviceToBeChanged.getHCPOffice());*/
             xDeviceRepository.save(xDeviceToBeSaved);
             return new ResponseEntity<>(xDeviceToBeSaved, HttpStatus.OK);
         } else {
@@ -82,11 +82,11 @@ public class XDeviceController {
                     xDeviceRepository.delete(xDeviceInDB.get());
                     return new ResponseEntity<>(HttpStatus.OK);})
                 .orElseGet(()->new ResponseEntity<>(HttpStatus.NOT_FOUND));
-//        if (xDeviceInDB.isPresent()){
-//            xDeviceRepository.delete(xDeviceInDB.get());
-//            return new ResponseEntity<>(HttpStatus.OK);
-//        } else {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
+       /* if (xDeviceInDB.isPresent()){
+            xDeviceRepository.delete(xDeviceInDB.get());
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }*/
     }
 }

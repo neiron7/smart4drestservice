@@ -25,13 +25,13 @@ public class XDevice {
 
     private String description;
 
-    @ManyToOne
-    private HCPOffice hCPOffice;
+    /*@ManyToOne
+    private HCPOffice hCPOffice;*/
 
-    public XDevice(long id, String name, String description, HCPOffice hCPOffice) {
+    public XDevice(long id, String name, String description/*, HCPOffice hCPOffice*/) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.hCPOffice = hCPOffice;
+        /*this.hCPOffice = hCPOffice;*/
     }
 }
