@@ -3,6 +3,7 @@ package com.smart4d.restservice.controllers;
 import com.smart4d.restservice.entities.XDevice;
 import com.smart4d.restservice.repositories.HCPOfficeRepository;
 import com.smart4d.restservice.repositories.XDeviceRepository;
+import com.smart4d.restservice.services.XDeviceService;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,77 +24,35 @@ import java.util.Optional;
 @Validated
 public class XDeviceController {
 
-    private Logger logger = LoggerFactory.getLogger(XDeviceController.class);
-
-    private XDeviceRepository xDeviceRepository;
-    private HCPOfficeRepository hCPOfficeRepository;
-
     @Autowired
-    public XDeviceController(XDeviceRepository xDeviceRepository, HCPOfficeRepository hCPOfficeRepository){
-        this.xDeviceRepository = xDeviceRepository;
-        this.hCPOfficeRepository = hCPOfficeRepository;
-    }
+    XDeviceService xDeviceService;
 
     @GetMapping("/")
     public ResponseEntity<List<XDevice>> getAllXDevices(){
-        logger.info("Getting list of all XDevices.");
-        List<XDevice> listOfXDevices = xDeviceRepository.findAll();
-        if (Objects.isNull(listOfXDevices) || listOfXDevices.isEmpty()){
-            logger.info("No XDevices found!");
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            logger.warn("Here is a list of XDevices found:");
-            return new ResponseEntity<>(listOfXDevices, HttpStatus.OK);
-        }
+        return Objects.nonNull(xDeviceService.getAllXDevices()) ? new ResponseEntity<>(xDeviceService.getAllXDevices(), HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<XDevice> getXDeviceById(@Valid @PathVariable("id") Long id){
-        Optional<XDevice> xDeviceInDB = xDeviceRepository.findById(id);
-        return xDeviceInDB
-                .map(xDevice -> new ResponseEntity<>(xDevice, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return Objects.nonNull(xDeviceService.getXDeviceById(id)) ? new ResponseEntity<>(xDeviceService.getXDeviceById(id), HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/")
     public ResponseEntity<XDevice> registerXDevice(@Valid @RequestBody XDevice xDeviceToBeSaved){
-        logger.info("Registering new XDevice.");
-        XDevice savedXDevice = xDeviceRepository.save(xDeviceToBeSaved);
-        return new ResponseEntity<>(savedXDevice, HttpStatus.CREATED);
+        return new ResponseEntity<>(xDeviceService.registerXDevice(xDeviceToBeSaved), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<XDevice> updateXDevice(@Valid @PathVariable("id") Long id, @RequestBody XDevice xDeviceToBeChanged){
-        Optional<XDevice> xDeviceInDB = xDeviceRepository.findById(id);
-        if (xDeviceInDB.isPresent()){
-            XDevice xDeviceToBeSaved = xDeviceInDB.get();
-            xDeviceToBeSaved.setDescription(xDeviceToBeChanged.getDescription());
-            xDeviceToBeSaved.setName(xDeviceToBeChanged.getName());
-            if (Objects.nonNull(xDeviceToBeChanged.getHCPOffice()) && Objects.nonNull(xDeviceToBeChanged.getHCPOffice().getId())){
-                xDeviceToBeSaved.setHCPOffice(hCPOfficeRepository.getOne(xDeviceToBeChanged.getHCPOffice().getId()));
-            } else {
-                xDeviceToBeSaved.setHCPOffice(xDeviceToBeChanged.getHCPOffice());
-            }
-            xDeviceRepository.save(xDeviceToBeSaved);
-            return new ResponseEntity<>(xDeviceToBeSaved, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return Objects.nonNull(xDeviceService.updateXDevice(id, xDeviceToBeChanged)) ? new ResponseEntity<>(xDeviceService.updateXDevice(id, xDeviceToBeChanged), HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity deleteXDevice(@Valid @PathVariable("id") Long id){
-        Optional<XDevice> xDeviceInDB = xDeviceRepository.findById(id);
-        return xDeviceInDB
-                .map(xDevice -> {
-                    xDeviceRepository.delete(xDeviceInDB.get());
-                    return new ResponseEntity<>(HttpStatus.OK);})
-                .orElseGet(()->new ResponseEntity<>(HttpStatus.NOT_FOUND));
-       /* if (xDeviceInDB.isPresent()){
-            xDeviceRepository.delete(xDeviceInDB.get());
+        if (xDeviceService.deleteXDevice(id)){
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }*/
+        }
     }
 }

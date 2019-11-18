@@ -28,10 +28,8 @@ public class HCPOfficeServiceImplementation implements HCPOfficeService {
     public List<HCPOffice> getAllHCPOffices() {
         List<HCPOffice> listOfHCPOffices = hCPOfficeRepository.findAll();
         if (Objects.isNull(listOfHCPOffices) || listOfHCPOffices.isEmpty()){
-            logger.info("No XDevices found!");
             return null;
         } else {
-            logger.warn("Here is a listOfHCPOffices of XDevices found:");
             return listOfHCPOffices;
         }
     }
