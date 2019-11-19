@@ -6,10 +6,12 @@ import com.smart4d.restservice.services.HCPOfficeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+@Service
 public class HCPOfficeServiceImplementation implements HCPOfficeService {
     private Logger logger = LoggerFactory.getLogger(HCPOfficeService.class);
 
@@ -22,10 +24,13 @@ public class HCPOfficeServiceImplementation implements HCPOfficeService {
 
     @Override
     public List<HCPOffice> getAllHCPOffices() {
+        logger.info("Starting to look over offices!");
         List<HCPOffice> listOfHCPOffices = hCPOfficeRepository.findAll();
         if (Objects.isNull(listOfHCPOffices) || listOfHCPOffices.isEmpty()){
+            logger.warn("No offices found!");
             return null;
         } else {
+            logger.info("Returning list of offices...");
             return listOfHCPOffices;
         }
     }

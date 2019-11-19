@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@ComponentScan("com.smart4d.restservice.services")
+@ComponentScan/*("com.smart4d.restservice.services")*/
 @EntityScan("com.smart4d.restservice.entities")
 @EnableJpaRepositories("com.smart4d.restservice.repositories")
 public class RestServiceApplication{

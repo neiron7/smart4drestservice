@@ -1,11 +1,9 @@
 package com.smart4d.restservice.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +27,6 @@ public class HCPOffice {
     private String description;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "hCPOffice")
-    //@JsonIgnoreProperties(value="HCPOffice")
     private List<XDevice> xDevices = new ArrayList<>();
 
     public HCPOffice(String name, String description, List<XDevice> xDevices) {
@@ -44,6 +41,4 @@ public class HCPOffice {
         this.description = description;
         this.xDevices = xDevices;
     }
-
-
 }
