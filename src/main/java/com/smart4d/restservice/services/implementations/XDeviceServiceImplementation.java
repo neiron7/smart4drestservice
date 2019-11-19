@@ -1,6 +1,5 @@
 package com.smart4d.restservice.services.implementations;
 
-import com.smart4d.restservice.entities.HCPOffice;
 import com.smart4d.restservice.entities.XDevice;
 import com.smart4d.restservice.repositories.HCPOfficeRepository;
 import com.smart4d.restservice.repositories.XDeviceRepository;
@@ -8,9 +7,6 @@ import com.smart4d.restservice.services.XDeviceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;

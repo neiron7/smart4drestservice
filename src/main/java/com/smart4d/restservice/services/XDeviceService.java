@@ -1,9 +1,7 @@
 package com.smart4d.restservice.services;
 
-import com.smart4d.restservice.entities.HCPOffice;
 import com.smart4d.restservice.entities.XDevice;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
