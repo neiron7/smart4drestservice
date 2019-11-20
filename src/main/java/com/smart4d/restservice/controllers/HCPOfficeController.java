@@ -23,7 +23,8 @@ public class HCPOfficeController {
 
     @GetMapping("/")
     public ResponseEntity<List<HCPOffice>> getAllHCPOffices(){
-        return Objects.nonNull(hCPOfficeService.getAllHCPOffices()) ? new ResponseEntity<>(hCPOfficeService.getAllHCPOffices(), HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        List<HCPOffice> x = hCPOfficeService.getAllHCPOffices();
+        return Objects.nonNull(x) ? new ResponseEntity<>(x, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/{id}")

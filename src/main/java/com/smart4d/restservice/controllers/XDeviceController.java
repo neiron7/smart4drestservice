@@ -6,6 +6,7 @@ import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -32,7 +33,7 @@ public class XDeviceController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<XDevice> registerXDevice(@Valid @RequestBody XDevice xDeviceToBeSaved){
+    public ResponseEntity<XDevice> registerXDevice(@Valid @NonNull @RequestBody XDevice xDeviceToBeSaved){
         return new ResponseEntity<>(xDeviceService.registerXDevice(xDeviceToBeSaved), HttpStatus.CREATED);
     }
 
