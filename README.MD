@@ -6,7 +6,7 @@ This is a test task for Smart4Diagnostics company
 
 ### Prerequisites
 
-For the service up and running, you will need a MySQL8 server running locally, Java 8, IntelliJ IDE, MAVEN 3 and any Browser.
+For the service up and running, you will need a MySQL8 server running locally, Java 8, MAVEN 3 and any Browser. Optionally you may need [Postman](https://www.getpostman.com/).
 
 ### Installing
 
