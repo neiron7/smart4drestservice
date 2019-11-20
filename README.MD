@@ -16,7 +16,7 @@ $ git clone https://github.com/neiron7/smart4drestservice.git
 ```
 Then start it in your IDE and build the project.
 
-Enter into the application.properties file your database(next we will use DB) settings, like DB name, username and password, so service can connect to your DB:
+Find in resources folder application.properties file. Enter into the application.properties your MySQL8 database(next we will use DB) settings: DB name, username and password, so service can connect to your DB, which should have standard configuration:
 ```
 spring.datasource.url=jdbc:mysql://localhost:3306/<YOUR DATABASE NAME>?useLegacyDatetimeCode=false&serverTimezone=UTC
 spring.datasource.username= <YOUR USER NAME>

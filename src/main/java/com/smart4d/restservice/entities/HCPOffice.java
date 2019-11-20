@@ -37,7 +37,7 @@ public class HCPOffice {
         this.xDevices = xDevices;
     }
 
-    public HCPOffice(Long id, String name, String description, List<XDevice> xDevices) {
+    public HCPOffice(long id, String name, String description, List<XDevice> xDevices) {
         this.id = id;
         this.name = name;
         this.description = description;
