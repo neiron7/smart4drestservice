@@ -37,7 +37,7 @@ When project running, enter in your browser address line:
 ```
 http://localhost:8080/swagger-ui.html
 ```
-Now you can play with specification.
+Now you can play with specification. Also you can use Postman ```Sample_requests.postman_collection.json``` file in the root of the project.
 Executing getAllHCPOffices GET method will give you result with already created from ```data.sql``` offices:
 ```
 [
