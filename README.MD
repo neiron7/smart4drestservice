@@ -102,7 +102,8 @@ Same works for XDevice Post method, but its enough to add id number in office ob
 ```
 this will create new device and will attach it to existing office with ```"id": 1```.
 
-For deletion
+For deletion of either device or office use DELETE request with id.
+
 
 ## Built with
 
