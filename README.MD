@@ -6,7 +6,7 @@ This is a test task for Smart4Diagnostics company
 
 ### Prerequisites
 
-For the service up and running, you will need a MySQL8 server running locally, Java 8, IntelliJ IDE, MAVEN 3 and any Browser.
+For the service up and running, you will need a MySQL8 server running locally, Java 8, MAVEN 3 and any Browser. Optionally you may need [Postman](https://www.getpostman.com/).
 
 ### Installing
 
@@ -102,7 +102,8 @@ Same works for XDevice Post method, but its enough to add id number in office ob
 ```
 this will create new device and will attach it to existing office with ```"id": 1```.
 
-For deletion
+For deletion of either device or office use DELETE request with id.
+
 
 ## Built with
 
