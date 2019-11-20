@@ -14,7 +14,6 @@ First, git clone the project into a directory of your wish:
 ```
 $ git clone https://github.com/neiron7/smart4drestservice.git
 ```
-Then start it in your IDE and build the project.
 
 Find in resources folder application.properties file. Enter into the application.properties your MySQL8 database (next we will use DB) settings: DB name, username and password, so service can connect to your DB, which should have standard configuration:
 ```
@@ -25,6 +24,14 @@ spring.datasource.password= <YOUR DATABASE PASSWORD>
 If the DB is not locally running, then change localhost:3306 in ```.properties file``` accordingly:
 ```
 spring.datasource.url=jdbc:mysql://<YOUR ADDRESS>:<YOUR PORT>/<YOUR DATABASE NAME>?useLegacyDatetimeCode=false&serverTimezone=UTC
+```
+Then build the project:
+```
+$ mvn install
+```
+and run it:
+```
+$ java -jar target/rest-service-1.0-SNAPSHOT.jar
 ```
 When project running, enter in your browser address line:
 ```
@@ -94,6 +101,8 @@ Same works for XDevice Post method, but its enough to add id number in office ob
 }
 ```
 this will create new device and will attach it to existing office with ```"id": 1```.
+
+For deletion
 
 ## Built with
 
