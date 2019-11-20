@@ -1,14 +1,14 @@
-#Smart4d REST Service
+# Smart4d REST Service
 
 This is a test task for Smart4Diagnostics company
 
-##Getting Started
+## Getting Started
 
-###Prerequisites
+### Prerequisites
 
 For the service up and running, you will need a MySQL8 server running locally, Java 8, IntelliJ IDE, MAVEN 3 and any Browser.
 
-###Installing
+### Installing
 
 First, git clone the project into a directory of your wish:
 ```
@@ -26,12 +26,12 @@ If the DB is not locally running, then change localhost:3306 in .properties file
 ```
 spring.datasource.url=jdbc:mysql://<YOUR ADDRESS>:<YOUR PORT>/<YOUR DATABASE NAME>?useLegacyDatetimeCode=false&serverTimezone=UTC
 ```
-##Built with
+## Built with
 
 * [Spingboot](https://spring.io/projects/spring-boot) - The web framework used
 * [Maven](https://maven.apache.org/) - Dependency Management
 * [Swagger UI](https://swagger.io/tools/swagger-ui/) - Specification generation and API testing
 
-##Authors
+## Authors
 
 * **Denis Fedorov** 

@@ -54,8 +54,8 @@ public class XDeviceServiceImplementation implements XDeviceService {
         Optional<XDevice> xDeviceInDB = xDeviceRepository.findById(id);
         if (xDeviceInDB.isPresent()){
             XDevice xDeviceToBeSaved = xDeviceInDB.get();
-            xDeviceToBeSaved.setDescription(xDeviceToBeChanged.getDescription());
             xDeviceToBeSaved.setName(xDeviceToBeChanged.getName());
+            xDeviceToBeSaved.setDescription(xDeviceToBeChanged.getDescription());
             if (Objects.nonNull(xDeviceToBeChanged.getHCPOffice()) && Objects.nonNull(xDeviceToBeChanged.getHCPOffice().getId())){
                 xDeviceToBeSaved.setHCPOffice(hCPOfficeRepository.getOne(xDeviceToBeChanged.getHCPOffice().getId()));
             } else {

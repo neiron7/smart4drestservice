@@ -1,6 +1,7 @@
 package com.smart4d.restservice.services.implementations;
 
 import com.smart4d.restservice.entities.HCPOffice;
+import com.smart4d.restservice.entities.XDevice;
 import com.smart4d.restservice.repositories.HCPOfficeRepository;
 import com.smart4d.restservice.services.HCPOfficeService;
 import org.slf4j.Logger;
@@ -43,6 +44,9 @@ public class HCPOfficeServiceImplementation implements HCPOfficeService {
 
     @Override
     public HCPOffice registerHCPOffice(HCPOffice hCPOfficeToBeSaved) {
+        for (XDevice xDevice : hCPOfficeToBeSaved.getXDevices()){
+            xDevice.setHCPOffice((hCPOfficeToBeSaved));
+        }
         HCPOffice savedHCPOffice = hCPOfficeRepository.save(hCPOfficeToBeSaved);
         return savedHCPOffice;
     }
@@ -52,8 +56,11 @@ public class HCPOfficeServiceImplementation implements HCPOfficeService {
         Optional<HCPOffice> hCPOfficeInDB = hCPOfficeRepository.findById(id);
         if (hCPOfficeInDB.isPresent()){
             HCPOffice hCPOfficeToBeSaved = hCPOfficeInDB.get();
-            hCPOfficeToBeSaved.setDescription(hCPOfficeToBeChanged.getDescription());
             hCPOfficeToBeSaved.setName(hCPOfficeToBeChanged.getName());
+            hCPOfficeToBeSaved.setDescription(hCPOfficeToBeChanged.getDescription());
+            for (XDevice xDevice : hCPOfficeToBeSaved.getXDevices()){
+                xDevice.setHCPOffice((hCPOfficeToBeSaved));
+            }
             hCPOfficeToBeSaved.setXDevices(hCPOfficeToBeChanged.getXDevices());
             hCPOfficeRepository.save(hCPOfficeToBeSaved);
             return hCPOfficeToBeSaved;

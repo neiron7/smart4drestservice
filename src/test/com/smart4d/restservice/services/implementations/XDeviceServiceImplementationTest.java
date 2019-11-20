@@ -43,7 +43,7 @@ public class XDeviceServiceImplementationTest {
         when(xDeviceRepository.findAll()).thenReturn(xDevices);
         when(xDeviceRepository.findById(1L)).thenReturn(java.util.Optional.of(xDevice1));
         when(xDeviceRepository.save(xDevice1_new)).thenReturn(xDevice1_new);
-        when(xDeviceRepository.saveAndFlush(xDevice1_updated)).thenReturn(xDevice1_updated);
+        when(xDeviceRepository.save(xDevice1_updated)).thenReturn(xDevice1_updated);
         doNothing().when(xDeviceRepository).deleteById(1L);
     }
 
@@ -95,10 +95,26 @@ public class XDeviceServiceImplementationTest {
     public void testUpdateXDevice(){
         XDevice actualXDevice = xDeviceServiceImplementation.updateXDevice(1L, xDevice1_updated);
 
-        verify(xDeviceRepository, times(1)).save(xDevice1_new);
         verify(xDeviceRepository, times(1)).findById(1L);
+        verify(xDeviceRepository, times(1)).save(xDevice1_updated);
 
         assertThat(actualXDevice.getId()).isEqualTo(1);
         assertThat(actualXDevice.getName()).isEqualTo("device1_updated");
+    }
+
+    @Test
+    public void testDeleteXDevice(){
+        boolean actualXDevice = xDeviceServiceImplementation.deleteXDevice(1L);
+
+        verify(xDeviceRepository, times(1)).delete(xDevice1);
+        verify(xDeviceRepository, times(1)).findById(1L);
+    }
+
+    @Test
+    public void testDeleteXDeviceNotExists(){
+        boolean actualXDevice = xDeviceServiceImplementation.deleteXDevice(3L);
+
+        verify(xDeviceRepository, never()).delete(any());
+        verify(xDeviceRepository, times(1)).findById(3L);
     }
 }
